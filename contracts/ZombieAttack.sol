@@ -2,13 +2,16 @@
 pragma solidity >0.8.0;
 
 import "./ZombieHelper.sol";
+import "./safemath.sol";
 
 contract ZombieBattle is ZombieHelper {
+    using SafeMath for uint256;
+
     uint256 randNonce = 0;
     uint256 attackVictoryProbability = 70;
 
-    function randMod(uint256 _modulus) internal returns (uint256) {
-        randNonce++;
+    function randMod(uint256 _modulus) internal view returns (uint256) {
+        randNonce.add(1);
         uint256 time = uint256(keccak256(abi.encodePacked((block.timestamp))));
         uint256 sender = uint256(keccak256(abi.encodePacked((msg.sender))));
         uint256 rand = uint256(keccak256(abi.encodePacked(randNonce)));
